@@ -116,10 +116,90 @@
         transform: translate3d(-100%, 0, 0);
     }
 }
+
+.floating-overlay-img {
+    position: absolute;
+    top: 70%;                  /* Centers it vertically */
+    left: 2%;                 /* Adjust this to change alignment */
+    transform: translateY(-50%); /* Keeps it perfectly centered vertically */
+    z-index: 10;               /* Higher than Owl Carousel elements so it floats on top */
+    width: 600px;              /* Adjust size as needed */
+    height: auto;
+    pointer-events: none;      /* Crucial: Allows clicking "through" the image onto buttons below */
+}
+/* Dark background overlay spanning the whole screen */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Container for the image and close button */
+.popup-content {
+  position: relative; /* CRITICAL: Allows absolute positioning relative to this box */
+  max-width: 650px;    /* Adjust size to fit your popup requirement */
+  width: 90%;
+  border-radius: 8px;
+}
+
+/* Image style */
+.popup-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+/* The 'X' Close Button positioned at the top-right corner */
+.close-btn {
+  position: absolute;
+  top: -12px;           /* Adjust to push slightly outside or inside the corner */
+  right: -12px;         /* Adjust to push slightly outside or inside the corner */
+  background-color: #c8bcbc; /* Red color like your drawing */
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;   /* Makes it a neat circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
+}
         </style>
 </head>
 
 <body>
+    <!-- Full screen dark background overlay -->
+<div class="popup-overlay" id="popupModal">
+  
+  <!-- Popup Content Wrapper -->
+  <div class="popup-content">
+    <!-- Close Button inside the wrapper -->
+    <span class="close-btn" onclick="closePopup()">&times;</span>
+    
+    <!-- Your Popup Image / Content -->
+    <img src="assets/img/20th (1).png" alt="Popup Announcement" class="popup-image">
+  </div>
+
+</div>
+
+   
 
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -176,6 +256,13 @@
             </nav>
         </div>
     </div>
+    <!-- Outer wrapper to hold both the carousel and the floating image -->
+<div class="slider-wrapper" style="position: relative; width: 100%; overflow: hidden;">
+
+    <!-- 1. Your Floating Image (Stays in place while slides move behind it) -->
+    <img src="assets/img/20th (1).png" class="floating-overlay-img" alt="Decoration Layer">
+
+    <!-- 2. Your Original Owl Carousel Slider (Unchanged) -->
     <div class="header-carousel owl-carousel">
         <div class="header-carousel-item mx-auto">
             <div class="header-carousel-item-img-2" style="height: 580px; overflow: hidden;">
@@ -197,8 +284,6 @@
             </div>
         </div>
         
-       
-
         <div class="header-carousel-item">
             <div class="header-carousel-item-img-3" style="height: 580px; overflow: hidden;">
                 <img src="assets/img/left_about.png" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Connected Shariah Governance Ecosystem">
@@ -219,7 +304,7 @@
             </div>
         </div>
     </div>
-
+</div>
 <!-- News Ticker Banner Start -->
 <div class="ticker-wrapper">
     <div class="ticker-title">
@@ -247,7 +332,7 @@
         
         <div class="text-center mx-auto pb-3 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
 
-             <h2 class="text-white fw-bold m-0" style="font-size: 2.0rem; letter-spacing: 2.0px;">       
+             <h2 class="text-white fw-bold m-0" style="font-size: 2.3rem; letter-spacing: 2.0px;">       
                                   Transforming Islamic Finance Through Digital Infrastructure </h2>
                                  </div>
               
@@ -271,7 +356,7 @@
     <div class="col-md-6 col-lg-4 wow fadeInUp d-flex" data-wow-delay="0.1s">
         <div class="service-item bg-light rounded w-100 d-flex flex-column overflow-hidden">
             <div class="service-img">
-                <img src="assets/img/ableace_bg.jpg" class="img-fluid w-100" alt="AbleAce Raakin Office" style="height: 180px; object-fit: cover;">
+                <img src="assets/img/office_1.png" class="img-fluid w-100" alt="AbleAce Raakin Office" style="height: 180px; object-fit: cover;">
             </div>
             <div class="service-content p-4 d-flex flex-column flex-grow-1">
                 <div class="service-content-inner d-flex flex-column flex-grow-1">
@@ -392,6 +477,12 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="js/main.js"></script>
+     <!-- JavaScript -->
+    <script>
+       function closePopup() {
+  document.getElementById("popupModal").style.display = "none";
+}
+    </script>
 
 </body>
 </html>
